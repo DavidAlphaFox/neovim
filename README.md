@@ -1,3 +1,6 @@
+⚠️ This fork contains some modifications for `libnvim` used in VimR until version 0.44. Since newer VimR uses the stock Neovim,
+we do not need this fork.
+
 <h1 align="center">
   <img src="https://raw.githubusercontent.com/neovim/neovim.github.io/master/logos/neovim-logo-300x87.png" alt="Neovim">
 </h1>
