@@ -11,9 +11,11 @@
 | [vimscript-dependency-analysis.md](vimscript-dependency-analysis.md) | 559 | 19.9KB | 删除 Vimscript 的影响 |
 | [lua-dependency-analysis.md](lua-dependency-analysis.md) | 422 | 18.5KB | 删除 Lua 的影响 |
 | [chez-scheme-feasibility.md](chez-scheme-feasibility.md) | 570 | 27.4KB | Chez Scheme 替代可行性 |
-| [reverse-architecture-vim-in-scheme.md](reverse-architecture-vim-in-scheme.md) | 765 | 35.5KB | **反向架构：Vim 嵌入 Chez Scheme** |
+| [reverse-architecture-vim-in-scheme.md](reverse-architecture-vim-in-scheme.md) | 765 | 35.5KB | 反向架构：Vim 嵌入 Chez Scheme |
+| [libvim-api-reference.md](libvim-api-reference.md) | 912 | 42.1KB | libvim API 参考 |
+| [tui-options-for-scheme-editor.md](tui-options-for-scheme-editor.md) | 1194 | 45KB | **Chez Scheme + libvim 的 TUI 选项 + FFI 绑定分析** |
 
-**总计**: 3,354 行文档，148KB
+**总计**: 4,946 行文档，215KB
 
 ---
 
@@ -160,6 +162,53 @@
 
 ---
 
+## TUI 选项分析
+
+如果采用反向架构 (Chez Scheme + libvim)，需要选择一个终端 UI 库：
+
+### TUI 库对比
+
+| TUI 库 | 推荐度 | 优势 | 劣势 |
+|--------|--------|------|------|
+| **libtickit** | ⭐⭐⭐⭐⭐ | 与 libvim 同生态、现代 API、24位颜色 | FFI 需 C 桥接 |
+| ncurses | ⭐⭐⭐⭐ | 成熟稳定、广泛兼容、FFI 简单 | API 较旧 |
+| notcurses | ⭐⭐ | 功能最丰富、图像支持 | 体积大 |
+| 自定义 ANSI | ⭐⭐ | 零依赖、完全控制 | 开发量大 |
+
+### FFI 绑定复杂度
+
+| 维度 | libtickit | ncurses |
+|------|-----------|---------|
+| **FFI 复杂度** | 高 (需 C 桥接) | 中 (纯 Scheme) |
+| **开发时间** | 4-8 周 | 1-2 周 |
+| **回调处理** | 必须用 trampoline | 可选 |
+| **参考实现** | 几乎没有 | Racket, Gambit 有 |
+
+### 建议
+
+- **快速开发**: ncurses (1-2 周)
+- **与 libvim 配套**: ncurses 原型验证后评估
+
+### 推荐架构
+
+```
+┌─────────────────────────────────────────────┐
+│           Chez Scheme Application           │
+├─────────────────────────────────────────────┤
+│  ┌─────────────┐    ┌──────────────────┐   │
+│  │   libvim    │    │    libtickit     │   │
+│  │ (edit core) │    │   (TUI render)   │   │
+│  └──────┬──────┘    └────────┬─────────┘   │
+│         │                    │              │
+│         ▼                    ▼              │
+│  ┌─────────────────────────────────────┐   │
+│  │          Event Loop (Chez)          │   │
+│  └─────────────────────────────────────┘   │
+└─────────────────────────────────────────────┘
+```
+
+---
+
 ## 最终结论
 
 ```
@@ -197,10 +246,10 @@
 
 | 指标 | 数值 |
 |------|------|
-| **文档数量** | 6 |
-| **总行数** | 3,354 |
-| **总大小** | 148 KB |
-| **涵盖主题** | Lua 嵌入、Vimscript 依赖、Lua 依赖、Chez Scheme 可行性、反向架构 |
+| **文档数量** | 8 |
+| **总行数** | 5,460 |
+| **总大小** | 228 KB |
+| **涵盖主题** | Lua 嵌入、Vimscript 依赖、Lua 依赖、Chez Scheme 可行性、反向架构、libvim API、TUI 选项、FFI 绑定挑战 |
 
 ---
 

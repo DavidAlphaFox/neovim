@@ -9,6 +9,10 @@
 | [lua-embedding-architecture.md](lua-embedding-architecture.md) | Lua 嵌入架构详解 |
 | [vimscript-dependency-analysis.md](vimscript-dependency-analysis.md) | 删除 Vimscript 的影响 |
 | [lua-dependency-analysis.md](lua-dependency-analysis.md) | 删除 Lua 的影响 |
+| [chez-scheme-feasibility.md](chez-scheme-feasibility.md) | Chez Scheme 替代可行性 |
+| [reverse-architecture-vim-in-scheme.md](reverse-architecture-vim-in-scheme.md) | 反向架构：Vim 嵌入 Chez Scheme |
+| [libvim-api-reference.md](libvim-api-reference.md) | libvim API 参考 |
+| [tui-options-for-scheme-editor.md](tui-options-for-scheme-editor.md) | **Chez Scheme + libvim 的 TUI 选项** |
 
 ---
 
